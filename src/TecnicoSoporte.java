@@ -9,7 +9,7 @@ public class TecnicoSoporte extends Persona {
             int limiteTickets
     ) {
         super(nombre, numeroEmpleado, email);
-        this.limiteTickets = limiteTickets;
+        setLimiteTickets(limiteTickets);
     }
 
     public int getLimiteTickets() {
@@ -17,6 +17,13 @@ public class TecnicoSoporte extends Persona {
     }
 
     public void setLimiteTickets(int limiteTickets) {
+        if (limiteTickets <= 0) {
+            System.out.println(
+                    "Error: el límite de tickets debe ser mayor que 0."
+            );
+            return;
+        }
+
         this.limiteTickets = limiteTickets;
     }
 

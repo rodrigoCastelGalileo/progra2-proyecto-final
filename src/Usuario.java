@@ -11,8 +11,8 @@ public class Usuario extends Persona {
             String departamento
     ) {
         super(nombre, numeroEmpleado, email);
-        this.nombreUsuario = nombreUsuario;
-        this.departamento = departamento;
+        setNombreUsuario(nombreUsuario);
+        setDepartamento(departamento);
     }
 
     public String getNombreUsuario() {
@@ -20,6 +20,13 @@ public class Usuario extends Persona {
     }
 
     public void setNombreUsuario(String nombreUsuario) {
+        if (nombreUsuario == null || nombreUsuario.isBlank()) {
+            System.out.println(
+                    "Error: el nombre de usuario es obligatorio."
+            );
+            return;
+        }
+
         this.nombreUsuario = nombreUsuario;
     }
 
@@ -28,6 +35,13 @@ public class Usuario extends Persona {
     }
 
     public void setDepartamento(String departamento) {
+        if (departamento == null || departamento.isBlank()) {
+            System.out.println(
+                    "Error: el departamento es obligatorio."
+            );
+            return;
+        }
+
         this.departamento = departamento;
     }
 

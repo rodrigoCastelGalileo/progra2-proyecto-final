@@ -5,9 +5,9 @@ public class Persona {
     private String email;
 
     public Persona(String nombre, int numeroEmpleado, String email) {
-        this.nombre = nombre;
-        this.numeroEmpleado = numeroEmpleado;
-        this.email = email;
+        setNombre(nombre);
+        setNumeroEmpleado(numeroEmpleado);
+        setEmail(email);
     }
 
     public String getNombre() {
@@ -15,6 +15,11 @@ public class Persona {
     }
 
     public void setNombre(String nombre) {
+        if (nombre == null || nombre.isBlank()) {
+            System.out.println("Error: el nombre es obligatorio.");
+            return;
+        }
+
         this.nombre = nombre;
     }
 
@@ -22,11 +27,27 @@ public class Persona {
         return numeroEmpleado;
     }
 
+    private void setNumeroEmpleado(int numeroEmpleado) {
+        if (numeroEmpleado <= 0) {
+            System.out.println(
+                    "Error: el número de empleado debe ser mayor que 0."
+            );
+            return;
+        }
+
+        this.numeroEmpleado = numeroEmpleado;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
+        if (email == null || email.isBlank() || !email.contains("@")) {
+            System.out.println("Error: el email no es válido.");
+            return;
+        }
+
         this.email = email;
     }
 
