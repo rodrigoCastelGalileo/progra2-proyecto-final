@@ -211,11 +211,11 @@ public class Main {
 
         String nuevoEstado = pedirEstado();
 
-        ticket.cambiarEstado(nuevoEstado);
-
-        System.out.println(
-                "Estado del ticket actualizado correctamente."
-        );
+        if (ticket.cambiarEstado(nuevoEstado)) {
+            System.out.println(
+                    "Estado del ticket actualizado correctamente."
+            );
+        }
     }
 
     private static void asignarTecnico(SistemaTickets sistema) {
@@ -234,10 +234,35 @@ public class Main {
             return;
         }
 
-        System.out.println(
-                "Funcionalidad pendiente de integración."
-        );
+        System.out.println("\n--- ASIGNAR TÉCNICO ---");
 
+        int id = pedirNumeroPositivo("ID del ticket: ");
+
+        Ticket ticket = sistema.buscarTicket(id);
+
+        if (ticket == null) {
+            System.out.println(
+                    "No existe un ticket con ese ID."
+            );
+            return;
+        }
+
+        int numeroEmpleado =
+                pedirNumeroPositivo(
+                        "No. de empleado del técnico: "
+                );
+
+        TecnicoSoporte tecnico =
+                sistema.buscarTecnico(numeroEmpleado);
+
+        if (tecnico == null) {
+            System.out.println(
+                    "No existe un técnico con ese número de empleado."
+            );
+            return;
+        }
+
+        sistema.asignarTicket(ticket, tecnico);
     }
 
     private static void registrarSolucion(SistemaTickets sistema) {

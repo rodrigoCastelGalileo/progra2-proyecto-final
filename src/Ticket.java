@@ -101,7 +101,7 @@ public class Ticket {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    private void setEstado(String estado) {
         if (estado == null ||
                 (!estado.equalsIgnoreCase("PENDIENTE")
                         && !estado.equalsIgnoreCase("EN_PROCESO")
@@ -165,8 +165,35 @@ public class Ticket {
         this.tecnicoAsignado = tecnico;
     }
 
-    public void cambiarEstado(String nuevoEstado) {
+    public boolean cambiarEstado(String nuevoEstado) {
+
+        if (estaSolucionado()) {
+            System.out.println(
+                    "Error: un ticket solucionado no puede cambiar de estado."
+            );
+            return false;
+        }
+
+        if (!nuevoEstado.equalsIgnoreCase("PENDIENTE")
+                && !nuevoEstado.equalsIgnoreCase("EN_PROCESO")) {
+
+            System.out.println(
+                    "Error: el estado no es válido."
+            );
+            return false;
+        }
+
+        if (nuevoEstado.equalsIgnoreCase("EN_PROCESO")
+                && tecnicoAsignado == null) {
+
+            System.out.println(
+                    "Error: debe asignar un técnico antes de cambiar el ticket a EN_PROCESO."
+            );
+            return false;
+        }
+
         setEstado(nuevoEstado);
+        return true;
     }
 
     public void mostrarInformacion() {
@@ -207,21 +234,42 @@ public class Ticket {
         return estado != null && estado.equalsIgnoreCase("SOLUCIONADO");
     }
 
-    public void registrarSolucion(String resolucion, String fechaResolucion) {
+    public void registrarSolucion(
+            String resolucion,
+            String fechaResolucion
+    ) {
+
+        if (estaSolucionado()) {
+            System.out.println(
+                    "Error: el ticket ya está solucionado."
+            );
+            return;
+        }
+
+        if (tecnicoAsignado == null) {
+            System.out.println(
+                    "Error: el ticket debe tener un técnico asignado."
+            );
+            return;
+        }
 
         if (resolucion == null || resolucion.isBlank()) {
-            System.out.println("Error: la resolución es obligatoria.");
+            System.out.println(
+                    "Error: la resolución es obligatoria."
+            );
             return;
         }
 
         if (fechaResolucion == null || fechaResolucion.isBlank()) {
-            System.out.println("Error: la fecha de resolución es obligatoria.");
+            System.out.println(
+                    "Error: la fecha de resolución es obligatoria."
+            );
             return;
         }
 
         this.resolucion = resolucion;
         this.fechaResolucion = fechaResolucion;
 
-        cambiarEstado("SOLUCIONADO");
+        setEstado("SOLUCIONADO");
     }
 }
