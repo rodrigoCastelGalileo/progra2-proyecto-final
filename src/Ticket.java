@@ -202,4 +202,26 @@ public class Ticket {
 
         System.out.println("------------------------------");
     }
+
+    public boolean estaSolucionado() {
+        return estado != null && estado.equalsIgnoreCase("SOLUCIONADO");
+    }
+
+    public void registrarSolucion(String resolucion, String fechaResolucion) {
+
+        if (resolucion == null || resolucion.isBlank()) {
+            System.out.println("Error: la resolución es obligatoria.");
+            return;
+        }
+
+        if (fechaResolucion == null || fechaResolucion.isBlank()) {
+            System.out.println("Error: la fecha de resolución es obligatoria.");
+            return;
+        }
+
+        this.resolucion = resolucion;
+        this.fechaResolucion = fechaResolucion;
+
+        cambiarEstado("SOLUCIONADO");
+    }
 }

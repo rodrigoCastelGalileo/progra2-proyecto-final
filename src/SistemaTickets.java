@@ -102,7 +102,24 @@ public class SistemaTickets {
             return;
         }
 
-        ticket.asignarTecnico(tecnico);
+        if (ticket.getTecnicoAsignado() != null) {
+            System.out.println(
+                    "Error: el ticket ya tiene un técnico asignado."
+            );
+            return;
+        }
+
+        int ticketsActuales =
+                contarTicketsAsignados(tecnico);
+
+        if (tecnico.puedeRecibirTicket(ticketsActuales)) {
+            ticket.asignarTecnico(tecnico);
+
+            System.out.println(
+                    "Ticket asignado correctamente a "
+                            + tecnico.getNombre() + "."
+            );
+        }
     }
 
     public void mostrarTicket(Ticket ticket) {
@@ -112,6 +129,20 @@ public class SistemaTickets {
         }
 
         ticket.mostrarInformacion();
+    }
+
+    public int contarTicketsAsignados(TecnicoSoporte tecnico) {
+
+        int cantidad = 0;
+
+        for (Ticket ticket : tickets) {
+            if (ticket.getTecnicoAsignado() == tecnico
+                    && !ticket.estaSolucionado()) {
+                cantidad++;
+            }
+        }
+
+        return cantidad;
     }
 
     public boolean hayUsuarios() {

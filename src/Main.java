@@ -238,7 +238,6 @@ public class Main {
                 "Funcionalidad pendiente de integración."
         );
 
-        // TODO: Integrar validación de capacidad de Henrik.
     }
 
     private static void registrarSolucion(SistemaTickets sistema) {
@@ -250,11 +249,48 @@ public class Main {
             return;
         }
 
-        System.out.println(
-                "Funcionalidad pendiente de integración."
+        System.out.println("\n--- REGISTRAR SOLUCIÓN ---");
+
+        int id = pedirNumeroPositivo("ID del ticket: ");
+
+        Ticket ticket = sistema.buscarTicket(id);
+
+        if (ticket == null) {
+            System.out.println(
+                    "No existe un ticket con ese ID."
+            );
+            return;
+        }
+
+        if (ticket.estaSolucionado()) {
+            System.out.println(
+                    "Este ticket ya fue solucionado."
+            );
+            return;
+        }
+
+        if (ticket.getTecnicoAsignado() == null) {
+            System.out.println(
+                    "El ticket debe tener un técnico asignado antes de solucionarlo."
+            );
+            return;
+        }
+
+        String resolucion =
+                pedirTexto("Resolución: ");
+
+        String fechaResolucion =
+                pedirTexto("Fecha de resolución: ");
+
+        ticket.registrarSolucion(
+                resolucion,
+                fechaResolucion
         );
 
-        // TODO: Integrar registrarResolucion() de Alfredo.
+        System.out.println(
+                "Ticket #" + ticket.getId()
+                        + " solucionado correctamente."
+        );
     }
 
     private static void consultarTicket(SistemaTickets sistema) {

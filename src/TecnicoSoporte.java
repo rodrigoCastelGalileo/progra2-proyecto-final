@@ -27,6 +27,25 @@ public class TecnicoSoporte extends Persona {
         this.limiteTickets = limiteTickets;
     }
 
+    public boolean puedeRecibirTicket(int ticketsActuales) {
+
+        if (ticketsActuales < 0) {
+            System.out.println(
+                    "Error: la cantidad de tickets no puede ser negativa."
+            );
+            return false;
+        }
+
+        if (ticketsActuales >= limiteTickets) {
+            System.out.println(
+                    "El técnico ha alcanzado el límite de tickets."
+            );
+            return false;
+        }
+
+        return true;
+    }
+
     @Override
     public void mostrarInformacion() {
         super.mostrarInformacion();
