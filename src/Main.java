@@ -495,4 +495,34 @@ public class Main {
 
         return estado;
     }
+
+    private static void consultarTicketsPorTecnico(
+            SistemaTickets sistema
+    ) {
+
+        if (!sistema.hayTecnicos()) {
+            System.out.println(
+                    "No hay técnicos registrados todavía."
+            );
+            return;
+        }
+
+        if (!sistema.hayTickets()) {
+            System.out.println(
+                    "No hay tickets registrados todavía."
+            );
+            return;
+        }
+
+        System.out.println(
+                "\n--- CONSULTAR TICKETS POR TÉCNICO ---"
+        );
+
+        int numeroEmpleado =
+                pedirNumeroPositivo(
+                        "No. de empleado del técnico: "
+                );
+
+        sistema.mostrarTicketsPorTecnico(numeroEmpleado);
+    }
 }

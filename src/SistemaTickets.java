@@ -83,11 +83,12 @@ public class SistemaTickets {
         );
 
         tickets.add(nuevoTicket);
-        System.out.println("*************************");
-        System.out.println(
-                "Ticket #" + id + " creado correctamente. (Guarde este numero, le puede servir)"
-        );
-        System.out.println("*************************");
+        System.out.println();
+        System.out.println("====================================");
+        System.out.println(" TICKET CREADO CORRECTAMENTE");
+        System.out.println(" ID DEL TICKET: " + id);
+        System.out.println(" Guarde este ID para futuras operaciones.");
+        System.out.println("====================================");
         return nuevoTicket;
     }
 
@@ -185,5 +186,38 @@ public class SistemaTickets {
         }
 
         return null;
+    }
+
+    public void mostrarTicketsPorTecnico(int numeroEmpleado) {
+
+        TecnicoSoporte tecnico = buscarTecnico(numeroEmpleado);
+
+        if (tecnico == null) {
+            System.out.println(
+                    "Error: no existe un técnico con ese número de empleado."
+            );
+            return;
+        }
+
+        boolean encontroTickets = false;
+
+        System.out.println(
+                "\n--- TICKETS ASIGNADOS A "
+                        + tecnico.getNombre().toUpperCase()
+                        + " ---"
+        );
+
+        for (Ticket ticket : tickets) {
+            if (ticket.getTecnicoAsignado() == tecnico) {
+                ticket.mostrarInformacion();
+                encontroTickets = true;
+            }
+        }
+
+        if (!encontroTickets) {
+            System.out.println(
+                    "Este técnico no tiene tickets asignados."
+            );
+        }
     }
 }
