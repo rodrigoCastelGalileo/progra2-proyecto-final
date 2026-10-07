@@ -54,6 +54,14 @@ public class Ticket {
     }
 
     public void setTipo(String tipo) {
+
+        if (estaSolucionado()) {
+            System.out.println(
+                    "Error: un ticket solucionado no puede modificarse."
+            );
+            return;
+        }
+
         if (tipo == null ||
                 (!tipo.equalsIgnoreCase("PROBLEMA")
                         && !tipo.equalsIgnoreCase("SOLICITUD"))) {
@@ -72,6 +80,14 @@ public class Ticket {
     }
 
     public void setDescripcion(String descripcion) {
+
+        if (estaSolucionado()) {
+            System.out.println(
+                    "Error: un ticket solucionado no puede modificarse."
+            );
+            return;
+        }
+
         if (descripcion == null || descripcion.isBlank()) {
             System.out.println(
                     "Error: la descripción es obligatoria."
@@ -121,6 +137,14 @@ public class Ticket {
     }
 
     public void setPrioridad(String prioridad) {
+
+        if (estaSolucionado()) {
+            System.out.println(
+                    "Error: un ticket solucionado no puede modificarse."
+            );
+            return;
+        }
+
         if (prioridad == null ||
                 (!prioridad.equalsIgnoreCase("BAJA")
                         && !prioridad.equalsIgnoreCase("MEDIA")
@@ -174,11 +198,19 @@ public class Ticket {
             return false;
         }
 
-        if (!nuevoEstado.equalsIgnoreCase("PENDIENTE")
-                && !nuevoEstado.equalsIgnoreCase("EN_PROCESO")) {
+        if (nuevoEstado == null
+                || (!nuevoEstado.equalsIgnoreCase("PENDIENTE")
+                && !nuevoEstado.equalsIgnoreCase("EN_PROCESO"))) {
 
             System.out.println(
                     "Error: el estado no es válido."
+            );
+            return false;
+        }
+
+        if (estado.equalsIgnoreCase(nuevoEstado)) {
+            System.out.println(
+                    "Error: el ticket ya se encuentra en ese estado."
             );
             return false;
         }

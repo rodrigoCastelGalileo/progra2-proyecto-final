@@ -13,6 +13,7 @@ public class Main {
 
         sistema.mostrarBienvenida();
 
+        //MENU PRINCIPAL
         do {
             mostrarMenu(sistema);
             opcion = pedirNumero("Seleccione una opción: ");
@@ -43,8 +44,13 @@ public class Main {
                     break;
 
                 case 7:
-                    consultarTicket(sistema);
+                    menuConsultas(sistema);
                     break;
+
+                case 8:
+                    modificarTicket(sistema);
+                    break;
+
 
                 case 0:
                     System.out.println("Saliendo del sistema...");
@@ -59,7 +65,89 @@ public class Main {
         scanner.close();
     }
 
-    //Funciones del main
+    //Funciones del menu
+    private static void menuConsultas(SistemaTickets sistema) {
+
+        if (!sistema.hayTickets()) {
+            System.out.println(
+                    "No hay tickets registrados todavía."
+            );
+            return;
+        }
+
+        int opcion;
+
+        do {
+            System.out.println(
+                    "\n========== CONSULTAS =========="
+            );
+            System.out.println("1. Consultar ticket por ID");
+            System.out.println("2. Mostrar todos los tickets");
+            System.out.println("3. Consultar tickets pendientes");
+            System.out.println("4. Consultar tickets en proceso");
+            System.out.println("5. Consultar tickets solucionados");
+            System.out.println("6. Consultar tickets por usuario");
+            System.out.println("7. Consultar tickets por técnico");
+            System.out.println("0. Volver");
+            System.out.println(
+                    "==============================="
+            );
+
+            opcion = pedirNumero("Seleccione una opción: ");
+
+            switch (opcion) {
+                case 1:
+                    consultarTicket(sistema);
+                    break;
+
+                case 2:
+                    consultarTodosLosTickets(sistema);
+                    break;
+
+                case 3:
+                    consultarTicketsPorEstado(
+                            sistema,
+                            "PENDIENTE"
+                    );
+                    break;
+
+                case 4:
+                    consultarTicketsPorEstado(
+                            sistema,
+                            "EN_PROCESO"
+                    );
+                    break;
+
+                case 5:
+                    consultarTicketsPorEstado(
+                            sistema,
+                            "SOLUCIONADO"
+                    );
+                    break;
+
+                case 6:
+                    consultarTicketsPorUsuario(sistema);
+                    break;
+
+                case 7:
+                    consultarTicketsPorTecnico(sistema);
+                    break;
+
+                case 0:
+                    System.out.println(
+                            "Regresando al menú principal..."
+                    );
+                    break;
+
+                default:
+                    System.out.println(
+                            "Error: opción no válida."
+                    );
+            }
+
+        } while (opcion != 0);
+    }
+
     private static void mostrarMenu(SistemaTickets sistema) {
 
         System.out.println("\n========== MENÚ PRINCIPAL ==========");
@@ -83,7 +171,8 @@ public class Main {
         if (sistema.hayTickets()) {
             System.out.println("5. Cambiar estado de ticket");
             System.out.println("6. Registrar solución");
-            System.out.println("7. Consultar ticket");
+            System.out.println("7. Consultas");
+            System.out.println("8. Modificar ticket");
         } else {
             System.out.println(
                     "5. Cambiar estado de ticket (BLOQUEADO)"
@@ -92,7 +181,10 @@ public class Main {
                     "6. Registrar solución (BLOQUEADO)"
             );
             System.out.println(
-                    "7. Consultar ticket (BLOQUEADO)"
+                    "7. Consultas (BLOQUEADO)"
+            );
+            System.out.println(
+                    "8. Modificar ticket (BLOQUEADO)"
             );
         }
 
@@ -341,7 +433,149 @@ public class Main {
         sistema.mostrarTicket(ticket);
     }
 
-    //Helpers
+    private static void modificarTicket(
+            SistemaTickets sistema
+    ) {
+
+        if (!sistema.hayTickets()) {
+            System.out.println(
+                    "No hay tickets registrados todavía."
+            );
+            return;
+        }
+
+        System.out.println("\n--- MODIFICAR TICKET ---");
+
+        int id = pedirNumeroPositivo("ID del ticket: ");
+
+        Ticket ticket = sistema.buscarTicket(id);
+
+        if (ticket == null) {
+            System.out.println(
+                    "No existe un ticket con ese ID."
+            );
+            return;
+        }
+
+        if (ticket.estaSolucionado()) {
+            System.out.println(
+                    "Error: un ticket solucionado no puede modificarse."
+            );
+            return;
+        }
+
+        int opcion;
+
+        do {
+            System.out.println(
+                    "\n========== MODIFICAR TICKET =========="
+            );
+            System.out.println(
+                    "Ticket #" + ticket.getId()
+            );
+            System.out.println(
+                    "1. Modificar descripción"
+            );
+            System.out.println(
+                    "2. Modificar tipo"
+            );
+            System.out.println(
+                    "3. Modificar prioridad"
+            );
+            System.out.println("0. Volver");
+            System.out.println(
+                    "======================================"
+            );
+
+            opcion = pedirNumero(
+                    "Seleccione una opción: "
+            );
+
+            switch (opcion) {
+
+                case 1:
+                    String descripcion =
+                            pedirTexto(
+                                    "Nueva descripción: "
+                            );
+
+                    ticket.setDescripcion(descripcion);
+
+                    System.out.println(
+                            "Descripción actualizada correctamente."
+                    );
+                    break;
+
+                case 2:
+                    String tipo = pedirTipo();
+
+                    ticket.setTipo(tipo);
+
+                    System.out.println(
+                            "Tipo actualizado correctamente."
+                    );
+                    break;
+
+                case 3:
+                    String prioridad = pedirPrioridad();
+
+                    ticket.setPrioridad(prioridad);
+
+                    System.out.println(
+                            "Prioridad actualizada correctamente."
+                    );
+                    break;
+
+                case 0:
+                    System.out.println(
+                            "Regresando al menú principal..."
+                    );
+                    break;
+
+                default:
+                    System.out.println(
+                            "Error: opción no válida."
+                    );
+            }
+
+        } while (opcion != 0);
+    }
+
+    //Metodos auxiliares
+    private static void consultarTodosLosTickets(
+            SistemaTickets sistema
+    ) {
+
+        System.out.println(
+                "\n--- TODOS LOS TICKETS ---"
+        );
+
+        System.out.println("Lógica pendiente.");
+    }
+
+    private static void consultarTicketsPorEstado(
+            SistemaTickets sistema,
+            String estado
+    ) {
+
+        System.out.println(
+                "\n--- TICKETS " + estado + " ---"
+        );
+
+        System.out.println("Lógica pendiente.");
+    }
+
+    private static void consultarTicketsPorUsuario(
+            SistemaTickets sistema
+    ) {
+
+        System.out.println(
+                "\n--- CONSULTAR TICKETS POR USUARIO ---"
+        );
+
+        System.out.println("Lógica pendiente.");
+    }
+
     private static String pedirTexto(String mensaje) {
         String valor;
 
