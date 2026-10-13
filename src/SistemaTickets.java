@@ -186,4 +186,28 @@ public class SistemaTickets {
 
         return null;
     }
+
+    public void mostrarTicketsPorUsuario(int numeroEmpleado) {
+
+        Usuario usuario = buscarUsuario(numeroEmpleado);
+
+        if (usuario == null) {
+            System.out.println("Error: no existe un usuario con ese número de empleado.");
+            return;
+        }
+
+        boolean tieneTickets = false;
+
+        for (Ticket ticket : tickets) {
+
+            if (ticket.getUsuario() == usuario) {
+                ticket.mostrarInformacion();
+                tieneTickets = true;
+            }
+        }
+
+        if (!tieneTickets) {
+            System.out.println("Este usuario no tiene tickets registrados.");
+        }
+
 }
