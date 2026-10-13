@@ -220,4 +220,63 @@ public class SistemaTickets {
             );
         }
     }
+
+    public void mostrarTicketsPorUsuario(int numeroEmpleado) {
+
+        Usuario usuario = buscarUsuario(numeroEmpleado);
+
+        if (usuario == null) {
+            System.out.println(
+                    "Error: no existe un usuario con ese número de empleado."
+            );
+            return;
+        }
+
+        boolean encontroTickets = false;
+
+        System.out.println(
+                "\n--- TICKETS REPORTADOS POR "
+                        + usuario.getNombre().toUpperCase()
+                        + " ---"
+        );
+
+        for (Ticket ticket : tickets) {
+            if (ticket.getUsuario() == usuario) {
+                ticket.mostrarInformacion();
+                encontroTickets = true;
+            }
+        }
+
+        if (!encontroTickets) {
+            System.out.println(
+                    "Este usuario no tiene tickets registrados."
+            );
+        }
+    }
+
+    public void mostrarTodosLosTickets() {
+
+        for (Ticket ticket : tickets) {
+            ticket.mostrarInformacion();
+        }
+    }
+
+    public void mostrarTicketsPorEstado(String estado) {
+
+        boolean encontroTickets = false;
+
+        for (Ticket ticket : tickets) {
+
+            if (ticket.getEstado().equalsIgnoreCase(estado)) {
+                ticket.mostrarInformacion();
+                encontroTickets = true;
+            }
+        }
+
+        if (!encontroTickets) {
+            System.out.println(
+                    "No hay tickets con estado " + estado + "."
+            );
+        }
+    }
 }

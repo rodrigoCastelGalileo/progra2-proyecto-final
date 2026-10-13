@@ -550,7 +550,7 @@ public class Main {
                 "\n--- TODOS LOS TICKETS ---"
         );
 
-        System.out.println("Lógica pendiente.");
+        sistema.mostrarTodosLosTickets();
     }
 
     private static void consultarTicketsPorEstado(
@@ -562,7 +562,7 @@ public class Main {
                 "\n--- TICKETS " + estado + " ---"
         );
 
-        System.out.println("Lógica pendiente.");
+        sistema.mostrarTicketsPorEstado(estado);
     }
 
     private static void consultarTicketsPorUsuario(
@@ -573,7 +573,12 @@ public class Main {
                 "\n--- CONSULTAR TICKETS POR USUARIO ---"
         );
 
-        System.out.println("Lógica pendiente.");
+        int numeroEmpleado =
+                pedirNumeroPositivo(
+                        "No. de empleado del usuario: "
+                );
+
+        sistema.mostrarTicketsPorUsuario(numeroEmpleado);
     }
 
     private static String pedirTexto(String mensaje) {
