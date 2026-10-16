@@ -1,18 +1,19 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SistemaTickets {
 
     private String nombreSistema;
 
-    private ArrayList<Usuario> usuarios;
-    private ArrayList<TecnicoSoporte> tecnicos;
+    private HashMap<Integer, Usuario> usuarios;
+    private HashMap<Integer, TecnicoSoporte> tecnicos;
     private ArrayList<Ticket> tickets;
 
     public SistemaTickets(String nombreSistema) {
         this.nombreSistema = nombreSistema;
 
-        usuarios = new ArrayList<>();
-        tecnicos = new ArrayList<>();
+        usuarios = new HashMap<>();
+        tecnicos = new HashMap<>();
         tickets = new ArrayList<>();
     }
 
@@ -28,14 +29,17 @@ public class SistemaTickets {
             return;
         }
 
-        if (buscarUsuario(usuario.getNumeroEmpleado()) != null) {
+        if (usuarios.containsKey(usuario.getNumeroEmpleado())) {
             System.out.println(
                     "Error: ya existe un usuario con ese número de empleado."
             );
             return;
         }
 
-        usuarios.add(usuario);
+        usuarios.put(
+                usuario.getNumeroEmpleado(),
+                usuario
+        );
         System.out.println("Usuario registrado correctamente.");
     }
 
@@ -45,14 +49,17 @@ public class SistemaTickets {
             return;
         }
 
-        if (buscarTecnico(tecnico.getNumeroEmpleado()) != null) {
+        if (tecnicos.containsKey(tecnico.getNumeroEmpleado())) {
             System.out.println(
                     "Error: ya existe un técnico con ese número de empleado."
             );
             return;
         }
 
-        tecnicos.add(tecnico);
+        tecnicos.put(
+                tecnico.getNumeroEmpleado(),
+                tecnico
+        );
         System.out.println("Técnico registrado correctamente.");
     }
 
@@ -159,23 +166,11 @@ public class SistemaTickets {
     }
 
     public Usuario buscarUsuario(int numeroEmpleado) {
-        for (Usuario usuario : usuarios) {
-            if (usuario.getNumeroEmpleado() == numeroEmpleado) {
-                return usuario;
-            }
-        }
-
-        return null;
+        return usuarios.get(numeroEmpleado);
     }
 
     public TecnicoSoporte buscarTecnico(int numeroEmpleado) {
-        for (TecnicoSoporte tecnico : tecnicos) {
-            if (tecnico.getNumeroEmpleado() == numeroEmpleado) {
-                return tecnico;
-            }
-        }
-
-        return null;
+        return tecnicos.get(numeroEmpleado);
     }
 
     public Ticket buscarTicket(int id) {
