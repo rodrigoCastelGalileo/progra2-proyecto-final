@@ -13,7 +13,7 @@ El sistema permite registrar usuarios y técnicos, crear tickets de soporte, asi
 
 - Java
 - Programación Orientada a Objetos
-- ArrayList
+- ArrayList y HashMap
 - Consola
 
 ## Funcionalidades principales
@@ -33,3 +33,10 @@ Compilar y ejecutar la clase:
 
 ```text
 Main.java
+```
+
+En Windows se puede ejecutar directamente:
+
+```text
+EjecutarSistema.bat
+```

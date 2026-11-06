@@ -150,7 +150,7 @@ public class Main {
 
     private static void mostrarMenu(SistemaTickets sistema) {
 
-        System.out.println("\n========== MENÚ PRINCIPAL ==========");
+        System.out.println("\n========== MENU PRINCIPAL ==========");
         System.out.println("1. Registrar usuario");
         System.out.println("2. Registrar técnico");
 
