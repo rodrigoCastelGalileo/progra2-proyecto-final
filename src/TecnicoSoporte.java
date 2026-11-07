@@ -1,3 +1,4 @@
+// TecnicoSoporte hereda de Persona y agrega el limite de trabajo que puede recibir.
 public class TecnicoSoporte extends Persona {
 
     private int limiteTickets;
@@ -27,6 +28,7 @@ public class TecnicoSoporte extends Persona {
         this.limiteTickets = limiteTickets;
     }
 
+    // Compara los tickets activos del tecnico contra el limite que tiene configurado.
     public boolean puedeRecibirTicket(int ticketsActuales) {
 
         if (ticketsActuales < 0) {
@@ -46,6 +48,7 @@ public class TecnicoSoporte extends Persona {
         return true;
     }
 
+    // Reutilizamos los datos de Persona y agregamos el limite del tecnico.
     @Override
     public void mostrarInformacion() {
         super.mostrarInformacion();
