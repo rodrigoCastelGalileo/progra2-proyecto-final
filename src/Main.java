@@ -1,11 +1,14 @@
 import java.util.Scanner;
 
+// Esta clase controla el menu y recibe los datos que escribe el usuario.
 public class Main {
 
+    // Usamos un solo Scanner para leer todas las opciones y datos del programa.
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
 
+        // Este objeto guarda y administra los usuarios, tecnicos y tickets.
         SistemaTickets sistema =
                 new SistemaTickets("SISTEMA DE TICKETS DE SOPORTE");
 
@@ -13,7 +16,7 @@ public class Main {
 
         sistema.mostrarBienvenida();
 
-        //MENU PRINCIPAL
+        // El menu se repite hasta que el usuario seleccione la opcion 0.
         do {
             mostrarMenu(sistema);
             opcion = pedirNumero("Seleccione una opción: ");
@@ -65,7 +68,7 @@ public class Main {
         scanner.close();
     }
 
-    //Funciones del menu
+    // Submenu donde dejamos juntas todas las formas de consultar tickets.
     private static void menuConsultas(SistemaTickets sistema) {
 
         if (!sistema.hayTickets()) {
@@ -148,6 +151,7 @@ public class Main {
         } while (opcion != 0);
     }
 
+    // Muestra como bloqueadas las opciones que todavia no se pueden usar.
     private static void mostrarMenu(SistemaTickets sistema) {
 
         System.out.println("\n========== MENU PRINCIPAL ==========");
@@ -192,6 +196,7 @@ public class Main {
         System.out.println("====================================");
     }
 
+    // Pide los datos del usuario y manda el registro a SistemaTickets.
     private static void registrarUsuario(SistemaTickets sistema) {
 
         System.out.println("\n--- REGISTRO DE USUARIO ---");
@@ -216,6 +221,7 @@ public class Main {
         sistema.registrarUsuario(usuario);
     }
 
+    // Pide los datos del tecnico, incluyendo cuantos tickets puede atender.
     private static void registrarTecnico(SistemaTickets sistema) {
 
         System.out.println("\n--- REGISTRO DE TÉCNICO ---");
@@ -237,6 +243,7 @@ public class Main {
         sistema.registrarTecnico(tecnico);
     }
 
+    // Para crear un ticket primero necesitamos encontrar al usuario que lo reporta.
     private static void crearTicket(SistemaTickets sistema) {
 
         if (!sistema.hayUsuarios()) {
@@ -310,6 +317,7 @@ public class Main {
         }
     }
 
+    // Busca el ticket y el tecnico antes de intentar hacer la asignacion.
     private static void asignarTecnico(SistemaTickets sistema) {
 
         if (!sistema.hayTickets()) {
@@ -357,6 +365,7 @@ public class Main {
         sistema.asignarTicket(ticket, tecnico);
     }
 
+    // Un ticket solo se puede solucionar si existe y ya tiene tecnico asignado.
     private static void registrarSolucion(SistemaTickets sistema) {
 
         if (!sistema.hayTickets()) {
@@ -433,6 +442,7 @@ public class Main {
         sistema.mostrarTicket(ticket);
     }
 
+    // Desde aqui solo modificamos descripcion, tipo o prioridad del ticket.
     private static void modificarTicket(
             SistemaTickets sistema
     ) {
@@ -541,7 +551,7 @@ public class Main {
         } while (opcion != 0);
     }
 
-    //Metodos auxiliares
+    // Metodos auxiliares para consultas y para validar lo que se escribe en consola.
     private static void consultarTodosLosTickets(
             SistemaTickets sistema
     ) {
@@ -597,6 +607,7 @@ public class Main {
         return valor;
     }
 
+    // Convierte la entrada a numero y evita que el programa falle si escriben letras.
     private static int pedirNumero(String mensaje) {
         int numero = -1;
 
@@ -667,6 +678,7 @@ public class Main {
         return email;
     }
 
+    // Solo aceptamos los dos tipos de ticket definidos para el proyecto.
     private static String pedirTipo() {
         String tipo;
 
@@ -688,6 +700,7 @@ public class Main {
         return tipo;
     }
 
+    // La prioridad se limita a las tres opciones que maneja el sistema.
     private static String pedirPrioridad() {
         String prioridad;
 
@@ -711,6 +724,7 @@ public class Main {
         return prioridad;
     }
 
+    // SOLUCIONADO no se pide aqui porque ese estado se coloca al registrar la solucion.
     private static String pedirEstado() {
         String estado;
 

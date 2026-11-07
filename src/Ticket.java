@@ -1,5 +1,7 @@
+// Representa cada reporte de soporte y controla sus cambios principales.
 public class Ticket {
 
+    // Datos principales que identifican y describen el ticket.
     private int id;
     private String tipo;
     private String descripcion;
@@ -9,6 +11,7 @@ public class Ticket {
     private String resolucion;
     private String prioridad;
 
+    // Guardamos quien reporto el ticket y quien lo esta atendiendo.
     private Usuario usuario;
     private TecnicoSoporte tecnicoAsignado;
 
@@ -29,6 +32,7 @@ public class Ticket {
         setPrioridad(prioridad);
         setUsuario(usuario);
 
+        // Al crear el ticket todavia no existe solucion ni tecnico asignado.
         this.fechaResolucion = null;
         this.resolucion = null;
         this.tecnicoAsignado = null;
@@ -53,6 +57,7 @@ public class Ticket {
         return tipo;
     }
 
+    // Tipo, descripcion y prioridad solo pueden cambiar mientras siga abierto.
     public void setTipo(String tipo) {
 
         if (estaSolucionado()) {
@@ -189,6 +194,7 @@ public class Ticket {
         this.tecnicoAsignado = tecnico;
     }
 
+    // Aqui controlamos que el cambio de estado tenga sentido.
     public boolean cambiarEstado(String nuevoEstado) {
 
         if (estaSolucionado()) {
@@ -215,6 +221,7 @@ public class Ticket {
             return false;
         }
 
+        // Para empezar a atenderlo primero debe existir un tecnico responsable.
         if (nuevoEstado.equalsIgnoreCase("EN_PROCESO")
                 && tecnicoAsignado == null) {
 
@@ -228,6 +235,7 @@ public class Ticket {
         return true;
     }
 
+    // Muestra toda la informacion disponible del ticket en un solo bloque.
     public void mostrarInformacion() {
         System.out.println("------------------------------");
         System.out.println("Ticket #" + id);
@@ -262,10 +270,12 @@ public class Ticket {
         System.out.println("------------------------------");
     }
 
+    // Este metodo nos ayuda a no repetir la misma comparacion en varias partes.
     public boolean estaSolucionado() {
         return estado != null && estado.equalsIgnoreCase("SOLUCIONADO");
     }
 
+    // Guardar una solucion tambien cierra el ticket cambiandolo a SOLUCIONADO.
     public void registrarSolucion(
             String resolucion,
             String fechaResolucion
