@@ -1,12 +1,16 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+// Esta clase se encarga de guardar los registros y hacer las operaciones principales.
 public class SistemaTickets {
 
     private String nombreSistema;
 
+    // Usuario y tecnico usan el numero de empleado como llave para buscarlos rapido.
     private HashMap<Integer, Usuario> usuarios;
     private HashMap<Integer, TecnicoSoporte> tecnicos;
+
+    // Los tickets se guardan en lista porque normalmente los recorremos para consultarlos.
     private ArrayList<Ticket> tickets;
 
     public SistemaTickets(String nombreSistema) {
@@ -23,6 +27,7 @@ public class SistemaTickets {
         System.out.println("====================================");
     }
 
+    // Antes de guardar un usuario revisamos que no exista otro con el mismo numero.
     public void registrarUsuario(Usuario usuario) {
         if (usuario == null) {
             System.out.println("Error: el usuario no es válido.");
@@ -43,6 +48,7 @@ public class SistemaTickets {
         System.out.println("Usuario registrado correctamente.");
     }
 
+    // Los tecnicos tambien se identifican por su numero de empleado.
     public void registrarTecnico(TecnicoSoporte tecnico) {
         if (tecnico == null) {
             System.out.println("Error: el técnico no es válido.");
@@ -77,6 +83,7 @@ public class SistemaTickets {
             return null;
         }
 
+        // El ID se genera segun la cantidad de tickets que ya existen.
         int id = tickets.size() + 1;
 
         Ticket nuevoTicket = new Ticket(
@@ -99,6 +106,7 @@ public class SistemaTickets {
         return nuevoTicket;
     }
 
+    // La asignacion revisa que el ticket este libre y que el tecnico tenga capacidad.
     public void asignarTicket(
             Ticket ticket,
             TecnicoSoporte tecnico
@@ -139,6 +147,7 @@ public class SistemaTickets {
         ticket.mostrarInformacion();
     }
 
+    // Solo contamos tickets que siguen activos, los solucionados ya no ocupan espacio.
     public int contarTicketsAsignados(TecnicoSoporte tecnico) {
 
         int cantidad = 0;
@@ -165,6 +174,7 @@ public class SistemaTickets {
         return !tickets.isEmpty();
     }
 
+    // Con HashMap podemos buscar directamente usando el numero de empleado.
     public Usuario buscarUsuario(int numeroEmpleado) {
         return usuarios.get(numeroEmpleado);
     }
@@ -173,6 +183,7 @@ public class SistemaTickets {
         return tecnicos.get(numeroEmpleado);
     }
 
+    // Los tickets estan en una lista, por eso recorremos hasta encontrar el ID.
     public Ticket buscarTicket(int id) {
         for (Ticket ticket : tickets) {
             if (ticket.getId() == id) {
@@ -183,6 +194,7 @@ public class SistemaTickets {
         return null;
     }
 
+    // Recorre los tickets y muestra solamente los asignados al tecnico buscado.
     public void mostrarTicketsPorTecnico(int numeroEmpleado) {
 
         TecnicoSoporte tecnico = buscarTecnico(numeroEmpleado);
@@ -216,6 +228,7 @@ public class SistemaTickets {
         }
     }
 
+    // Recorre los tickets y muestra solamente los reportados por ese usuario.
     public void mostrarTicketsPorUsuario(int numeroEmpleado) {
 
         Usuario usuario = buscarUsuario(numeroEmpleado);
@@ -256,6 +269,7 @@ public class SistemaTickets {
         }
     }
 
+    // Este mismo metodo sirve para PENDIENTE, EN_PROCESO y SOLUCIONADO.
     public void mostrarTicketsPorEstado(String estado) {
 
         boolean encontroTickets = false;
