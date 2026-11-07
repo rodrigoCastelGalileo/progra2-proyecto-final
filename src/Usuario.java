@@ -1,3 +1,4 @@
+// Usuario hereda los datos comunes de Persona y agrega datos del empleado que reporta.
 public class Usuario extends Persona {
 
     private String nombreUsuario;
@@ -45,6 +46,7 @@ public class Usuario extends Persona {
         this.departamento = departamento;
     }
 
+    // Primero mostramos la informacion de Persona y despues la del Usuario.
     @Override
     public void mostrarInformacion() {
         super.mostrarInformacion();
