@@ -1,9 +1,11 @@
+// Clase base con los datos que comparten usuarios y tecnicos.
 public class Persona {
 
     private String nombre;
     private int numeroEmpleado;
     private String email;
 
+    // El constructor usa los setters para aprovechar las mismas validaciones.
     public Persona(String nombre, int numeroEmpleado, String email) {
         setNombre(nombre);
         setNumeroEmpleado(numeroEmpleado);
@@ -51,6 +53,7 @@ public class Persona {
         this.email = email;
     }
 
+    // Las clases hijas reutilizan estos datos y luego agregan los propios.
     public void mostrarInformacion() {
         System.out.println("Nombre: " + nombre);
         System.out.println("No. empleado: " + numeroEmpleado);
